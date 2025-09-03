@@ -1,0 +1,12 @@
+substitutions:
+  WEB_USERNAME: "esphome"
+  WEB_PASSWORD: "esphome"
+
+web_server:
+  port: 80
+  version: 3
+  include_internal: true
+  local: true
+  auth:
+    username: "$WEB_USERNAME"
+    password: "$WEB_PASSWORD"

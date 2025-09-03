@@ -1,0 +1,25 @@
+debug:
+  update_interval: 5s
+
+text_sensor:
+  - platform: version
+    name: ESPHome Version
+    entity_category: "diagnostic"
+  - platform: debug
+    reset_reason:
+      name: "Reset Reason"
+      entity_category: "diagnostic"
+
+binary_sensor:
+  - platform: status
+    id: esp_status
+    name: Status
+    device_class: connectivity
+
+sensor:
+  - platform: uptime
+    name: Uptime
+    update_interval: 60s
+    accuracy_decimals: 0
+    icon: mdi:clock-outline
+    entity_category: "diagnostic"

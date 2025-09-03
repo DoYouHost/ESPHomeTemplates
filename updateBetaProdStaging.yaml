@@ -1,0 +1,41 @@
+substitutions:
+  PROD_MANIFEST_URL: "https://xyz.com/project/manifest.json"
+  BETA_MANIFEST_URL: "https://xyz.com/project/manifest-beta.json"
+
+http_request:
+  follow_redirects: true
+
+ota:
+  - platform: http_request
+
+update:
+  - platform: http_request
+    id: update_http_request
+    name: Firmware Update
+    source: $PROD_MANIFEST_URL
+
+button:
+  - platform: template
+    id: check_for_updates
+    name: "Check for Updates"
+    icon: mdi:update
+    entity_category: "config"
+    on_press:
+      then:
+        - component.update: update_http_request
+
+switch:
+  - platform: template
+    name: Beta Firmware
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
+    icon: mdi:test-tube
+    entity_category: config
+    on_turn_on:
+      - logger.log: "OTA updates set to use Beta firmware"
+      - lambda: id(update_http_request).set_source_url("$BETA_MANIFEST_URL");
+      - component.update: update_http_request
+    on_turn_off:
+      - logger.log: "OTA updates set to use Production firmware"
+      - lambda: id(update_http_request).set_source_url("$PROD_MANIFEST_URL");
+      - component.update: update_http_request

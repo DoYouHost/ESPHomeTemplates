@@ -1,0 +1,20 @@
+sensor:
+  - platform: debug
+    free:
+      name: "Heap Free"
+    block:
+      name: "Heap Max Block"
+    loop_time:
+      name: "Loop Time"
+    psram:
+      name: "Free PSRAM"
+    cpu_frequency:
+      name: "CPU Frequency"
+      unit_of_measurement: "MHz"
+      filters:
+        - multiply: 0.000001
+
+  - platform: internal_temperature
+    id: internal_temp
+    name: "Internal Temperature"
+    update_interval: 60s

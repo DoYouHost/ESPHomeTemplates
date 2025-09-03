@@ -1,0 +1,11 @@
+text_sensor:
+  - platform: ethernet_info
+    ip_address:
+      entity_category: "diagnostic"
+      name: IP Address
+    dns_address:
+      entity_category: "diagnostic"
+      name: DNS Address
+    mac_address:
+      entity_category: "diagnostic"
+      name: MAC Address
