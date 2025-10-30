@@ -1,0 +1,18 @@
+defaults:
+  name: "Light"
+  id: "light"
+  pin: GPIO21
+  restore_mode: RESTORE_DEFAULT_OFF
+
+output:
+  - platform: gpio
+    pin: ${pin}
+    id: led_output_${id}
+
+light:
+  - platform: binary
+    name: "${name}"
+    output: led_output_${id}
+    id: ${id}
+    restore_mode: ${restore_mode}
+    default_transition_length: 0s

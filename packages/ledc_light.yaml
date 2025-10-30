@@ -1,0 +1,71 @@
+---
+# Reusable Monochromatic LED Light Template
+# Supports templating with vars to define multiple LED lights
+#
+# Usage in main config:
+#   packages:
+#     light_1: !include
+#       file: packages/led_light.yaml
+#       vars:
+#         name: "Light 1"
+#         id: "light_1"
+#         pin: GPIO21
+#         frequency: "19531Hz"
+
+defaults:
+  name: "Light"
+  id: "light"
+  pin: GPIO21
+  frequency: "19531Hz"
+  zero_means_zero: true
+  restore_mode: RESTORE_DEFAULT_OFF
+
+output:
+  - platform: ledc
+    pin: ${pin}
+    id: led_output_${id}
+    frequency: ${frequency}
+    zero_means_zero: ${zero_means_zero}
+
+light:
+  - platform: monochromatic
+    name: "${name}"
+    output: led_output_${id}
+    id: ${id}
+    restore_mode: ${restore_mode}
+    default_transition_length: 0s
+
+number:
+  - platform: template
+    name: "${name} Max Brightness"
+    id: ${id}_max_brightness
+    optimistic: true
+    min_value: 0
+    max_value: 1.0
+    initial_value: 1.0
+    step: 0.01
+    restore_value: true
+    entity_category: config
+    icon: "mdi:brightness-7"
+    mode: slider
+    on_value:
+      then:
+        - lambda: |-
+            id(led_output_${id}).set_max_power(x);
+
+  - platform: template
+    name: "${name} Min Brightness"
+    id: ${id}_min_brightness
+    optimistic: true
+    min_value: 0
+    max_value: 1.0
+    initial_value: 0.0
+    step: 0.01
+    restore_value: true
+    entity_category: config
+    icon: "mdi:brightness-5"
+    mode: slider
+    on_value:
+      then:
+        - lambda: |-
+            id(led_output_${id}).set_min_power(x);
