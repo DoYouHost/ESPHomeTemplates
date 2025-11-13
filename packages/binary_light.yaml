@@ -15,4 +15,3 @@ light:
     output: led_output_${id}
     id: ${id}
     restore_mode: ${restore_mode}
-    default_transition_length: 0s
