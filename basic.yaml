@@ -1,4 +1,5 @@
 logger:
+  id: logger_component
   level: DEBUG
 
 debug:
