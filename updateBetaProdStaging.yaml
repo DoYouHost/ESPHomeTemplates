@@ -3,6 +3,7 @@ substitutions:
   BETA_MANIFEST_URL: "https://xyz.com/project/manifest-beta.json"
 
 http_request:
+  id: http_request_component
   follow_redirects: true
 
 ota:
