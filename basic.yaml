@@ -24,7 +24,7 @@ binary_sensor:
 
 sensor:
   - platform: uptime
-    esphome_uptime
+    id: esphome_uptime
     name: Uptime
     update_interval: 60s
     accuracy_decimals: 0
