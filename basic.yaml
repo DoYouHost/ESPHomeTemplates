@@ -7,21 +7,24 @@ debug:
 
 text_sensor:
   - platform: version
+    id: esphome_version
     name: ESPHome Version
     entity_category: "diagnostic"
   - platform: debug
     reset_reason:
+      id: esphome_reset_reason
       name: "Reset Reason"
       entity_category: "diagnostic"
 
 binary_sensor:
   - platform: status
-    id: esp_status
+    id: esphome_status
     name: Status
     device_class: connectivity
 
 sensor:
   - platform: uptime
+    esphome_uptime
     name: Uptime
     update_interval: 60s
     accuracy_decimals: 0
