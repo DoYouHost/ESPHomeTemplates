@@ -1,0 +1,70 @@
+defaults:
+  name: "Motor"
+  id: "motor"
+  i2c_id: "bus_a"
+  brake_pin: GPIO16
+  pole_pairs: "6"
+  update_interval: 5s
+  restore_mode: RESTORE_DEFAULT_OFF
+  min_demand: "10%"
+
+external_components:
+  - source:
+      type: git
+      url: https://github.com/MorganMLGman/DoYouHost.ESPHomeTemplates
+    components: [a89301]
+
+a89301:
+  id: ${id}_driver
+  i2c_id: ${i2c_id}
+  pole_pairs: ${pole_pairs}
+  update_interval: ${update_interval}
+  brake_pin: ${brake_pin}
+
+fan:
+  - platform: a89301
+    a89301_id: ${id}_driver
+    id: ${id}
+    name: "${name}"
+    restore_mode: ${restore_mode}
+    min_demand: ${min_demand}
+
+sensor:
+  - platform: a89301
+    a89301_id: ${id}_driver
+    rpm:
+      name: "${name} Speed"
+      id: ${id}_rpm
+    speed:
+      name: "${name} Frequency"
+      id: ${id}_frequency
+      entity_category: "diagnostic"
+    bus_current:
+      name: "${name} Current"
+      id: ${id}_current
+    duty:
+      name: "${name} Duty"
+      id: ${id}_duty
+    supply_voltage:
+      name: "${name} Supply Voltage"
+      id: ${id}_supply_voltage
+    temperature:
+      name: "${name} Temperature"
+      id: ${id}_temperature
+
+binary_sensor:
+  - platform: a89301
+    a89301_id: ${id}_driver
+    fault:
+      name: "${name} Fault"
+      id: ${id}_fault
+    spinning:
+      name: "${name} Spinning"
+      id: ${id}_spinning
+
+text_sensor:
+  - platform: a89301
+    a89301_id: ${id}_driver
+    operation_state:
+      name: "${name} State"
+      id: ${id}_state
